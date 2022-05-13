@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}
+SportCenter
+{% endblock %}
+{% block body %}
+      <div class="row">
+        <div class="col-sm">
+          <h2>Historial de Compras</h2>
+          <p>Productos que has comprado</p>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Fecha</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for i in range(myShirtsLen) %}
+              <tr>
+                <th scope="row">{{ i + 1 }}</th>
+                <td><img src="/static/Imagenes/{{ myShirts[i]["image"] }}" width="30px" alt="{{ myShirts[i]["team"] }}" /></td>
+                <td>{{ myShirts[i]["team"] }}</td>
+                <td>{{ myShirts[i]["quantity"] }}</td>
+                <td>{{ myShirts[i]["date"] }}</td>
+                <td><a><button type="button" class="btn btn-warning">Comprar otra vez </button></a></td>
+              </tr>
+            </tbody>
+            {% endfor %}
+            <tfoot>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+{% endblock %}

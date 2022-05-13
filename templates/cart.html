@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}
+SportCenter
+{% endblock %}
+{% block body %}
+  <div aria-hidden="true">
+    <div>
+      <div>
+        <div>
+          <h5 class="modal-title" id="exampleModalLongTitle">Carrito</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div>
+          <div id="shoppingCart">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Sub-Total</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% if shopLen != 0 %}
+                    {% for i in range(shopLen) %}
+                      <tr>
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td><img src="/static/Imagenes/{{ shoppingCart[i]["image"] }}" width="30px" alt="{{ shoppingCart[i]["team"] }}" /></td>
+                        <td>{{ shoppingCart[i]["team"] }}</td>
+                        <td><form action="/update/">
+                            <input type="hidden" name="id" value="{{shoppingCart[i]["id"]}}" />
+                            <input type="number" name="quantity" min="1" max="10" size="5" value="{{ shoppingCart[i]['SUM(qty)'] }}">
+                            <button type="submit" class="btn btn-warning checkout">Aumentar</button>
+                          </form></td>
+                        <td>{{ '${:,.2f}'.format(shoppingCart[i]["price"]) }}</td>
+                        <td>{{ '${:,.2f}'.format(shoppingCart[i]['SUM(subTotal)']) }}</td>
+                        <td>
+                          <form action="/remove/" methods="GET">
+                            <input type="hidden" name="id" value="{{ shoppingCart[i]["id"] }}" />
+                            <button type="submit" class="btn btn-secondary btn-sm" id="removeFromCart">Quitar</button>
+                          </form>
+                        </td>
+                      </tr>
+                    </tbody>
+                    {% endfor %}
+                    <tfoot>
+                      <tr>
+                        <td colSpan="7">Total: {{ '${:,.2f}'.format(total) }}<br /><br />
+                          <div class="modal-footer">
+                            <a href="/"><button type="button" class="btn btn-primary checkout">Seguir Comprando</button></a>
+                            <a href="/checkout/"><button type="button" class="btn btn-success checkout">Comprar</button></a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tfoot>
+                    {% else %}
+                      <tr>
+                        <td colSpan="7"><h3>Carrito Vacio :(</h3></td>
+                      </tr>
+                    <tfoot>
+                      <tr>
+                          <div>
+                            <a href="/"><button type="button" class="btn btn-secondary" data-dismiss="modal"> Seguir Comprando</button></a>
+                          </div>
+                      </tr>
+                    </tfoot>
+                    {% endif %}
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
